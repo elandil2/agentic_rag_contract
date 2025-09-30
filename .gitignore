@@ -73,3 +73,7 @@ models/
 # Uploaded files
 uploads/
 data/temp/
+
+# MCP and Claude settings (contains API keys)
+.mcp.json
+.claude/
