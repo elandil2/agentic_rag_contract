@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(. rag_env/Scripts/activate)",
+      "Bash(chmod:*)",
+      "Read(//c/Users/safix/Pictures/Screenshots/**)",
+      "Bash(pip install:*)",
+      "Bash(pip show:*)",
+      "Bash(pip uninstall:*)",
+      "Bash(python -m pip uninstall:*)",
+      "Bash(python -m pip install:*)",
+      "Bash(streamlit run:*)",
+      "Bash(python -m pip:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
