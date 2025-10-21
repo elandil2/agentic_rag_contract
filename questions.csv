@@ -1,0 +1,23 @@
+﻿Index,Questions
+1,What is customers name ?
+2,What is the customers sector ?
+3,Which product do customers offer?
+4,When is the deadline ?
+5,How many rounds is the tender?
+6,What is the service type ? Explain regulary intermodal, short-sea, road, rail
+7,Which types of equipment / vehicle are in demand ?
+8,What is the ADR conditions ?
+9,If the contract mentions the existence of any ADR, summarise its type.
+10,Whats is the ADR class types ?
+11,If the contract mentions the existence of any temperature controlled or reefer or frigo, summarise its type and tell me what is the ratings ?
+13,What is the payment term?
+14,What is the Expected Go-Live Date ?
+15,How long is price validity ?
+16,Is contract mentions double driver ?
+17,Is contract mentions safety equipments ? If the contract mentions safety conditions, summarise.
+18,What is pre-advise ? When does the customer request a vehicle and how long do we have to fulfil the request?
+19,Summarise KPI conditions. Is there any penalty or demurrage fee ?
+20,If contract contain, free time costs, weekend loading, Summarise
+21,Summarise if there are FSC requirements 
+22,What is the base fuel rate ?
+23,What is the fuel effect ratio?

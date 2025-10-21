@@ -1,29 +1,47 @@
-# Contract RAG Analysis System
+# AI Contract Analysis System
 
-A production-ready Retrieval-Augmented Generation (RAG) system for contract analysis using LangChain, LangGraph, and Groq API.
+A production-ready RAG (Retrieval-Augmented Generation) system for analyzing logistics and transportation contracts using LangChain, LangGraph, and Groq API.
+
+## ☁️ Quick Deploy to Streamlit Cloud
+
+**Deploy in 15-30 minutes!** See **[STREAMLIT_DEPLOY.md](STREAMLIT_DEPLOY.md)** for step-by-step guide.
+
+**Cost:** $0 (Free with Streamlit Cloud + Groq free tier)
+
+**Live Demo:** Deploy your own instance in minutes!
+
+---
 
 ## 🚀 Features
 
-- **Multi-Agent Architecture**: Supervisor coordinates retriever, analyst, and summarizer agents
-- **Semantic Search**: HuggingFace embeddings for accurate document retrieval
-- **Streaming Support**: Real-time response streaming with Groq API
-- **Interactive UI**: Streamlit-based interface for document upload and analysis
-- **Persistent Storage**: ChromaDB vector store with persistent storage
-- **Quick Analysis**: Pre-built buttons for risk analysis, key terms, dates, and payment terms
-- **Comprehensive Logging**: Detailed logging for debugging and monitoring
+- **🤖 Multi-Agent Architecture**: Supervisor coordinates retriever, analyst, and summarizer agents
+- **🔍 Semantic Search**: HuggingFace embeddings for accurate document retrieval
+- **⚡ Real-time Streaming**: Instant response streaming with Groq API
+- **📊 Interactive UI**: Modern Streamlit interface with professional design
+- **💾 Vector Database**: ChromaDB for fast semantic search
+- **📋 23 Pre-configured Questions**: Common logistics contract questions built-in
+- **📄 Multi-format Support**: PDF, Excel (.xlsx, .xls), and TXT files
+- **🧮 Logistics Tools**: Trip cost calculator and KPI compliance checker
+- **🎯 Domain Optimized**: Specialized for FTL/LTL transportation contracts
+- **🔓 Open Source**: No vendor lock-in, switch LLM providers anytime
+
+---
 
 ## 📋 Requirements
 
 - Python 3.9+
-- Groq API Key ([Get one here](https://console.groq.com/))
-- 4GB+ RAM recommended for embeddings
+- Groq API Key ([Get free key](https://console.groq.com/))
+- 4GB+ RAM (for embeddings)
 
-## 🔧 Installation
+---
 
-### 1. Clone or Download the Repository
+## 🔧 Local Installation
+
+### 1. Clone Repository
 
 ```bash
-cd rag_langgraph
+git clone https://github.com/YOUR_USERNAME/agentic_rag_contract.git
+cd agentic_rag_contract
 ```
 
 ### 2. Create Virtual Environment
@@ -44,264 +62,362 @@ source rag_env/bin/activate
 pip install -r requirements.txt
 ```
 
-### 4. Configure Environment Variables
+### 4. Configure API Key
 
 Copy `.env.example` to `.env`:
 
 ```bash
+# Windows
+copy .env.example .env
+
+# Linux/Mac
 cp .env.example .env
 ```
 
 Edit `.env` and add your Groq API key:
 
 ```env
-GROQ_API_KEY=your_groq_api_key_here
+GROQ_API_KEY=gsk_your_api_key_here
 ```
 
-## 🎯 Usage
+Get your free API key at: https://console.groq.com/
 
-### Running the Application
+### 5. Run the Application
 
 ```bash
 streamlit run main.py
 ```
 
-The application will open in your browser at `http://localhost:8501`
+Application opens at `http://localhost:8501`
 
-### Basic Workflow
+---
 
-1. **Upload Documents**: Click "Upload Contract Documents" in the sidebar
-   - Supported formats: PDF, TXT
-   - Upload 1-10 documents
+## 🎯 How to Use
 
-2. **Process Documents**: Click "Process Documents" button
-   - System will chunk documents and create embeddings
-   - Vector store will be created for semantic search
+### 1. Upload Contracts
 
-3. **Ask Questions**: Use the chat interface to ask questions about your contracts
-   - Examples:
-     - "What are the payment terms?"
-     - "List all obligations of the parties"
-     - "Identify any risks or liabilities"
+- Click **"Upload Contract Documents"** in sidebar
+- Supported formats: **PDF, Excel (.xlsx, .xls), TXT**
+- Upload multiple files at once
 
-4. **Quick Analysis**: Use pre-built analysis buttons
-   - 🔍 Find Key Terms
-   - ⚠️ Identify Risks
-   - 📅 Extract Dates
-   - 💰 Payment Terms
-   - 📋 Summarize All Contracts
+### 2. Process Documents
+
+- Click **"Process Documents"** button
+- System extracts text and creates vector embeddings
+- Takes 2-5 seconds per 10 pages
+
+### 3. Ask Questions
+
+**Two ways to interact:**
+
+#### A. Type Your Own Questions
+Use the chat interface:
+- "What is the on-time delivery requirement?"
+- "What are the payment terms?"
+- "Calculate trip cost for 500km at €1.2/km"
+- "What happens if we miss KPI targets?"
+
+#### B. Use Pre-configured Questions (23 Built-in)
+Click any of the 23 frequent logistics questions in the right panel:
+- Customer details (name, sector, products)
+- Service types (FTL/LTL, intermodal, rail)
+- Equipment requirements
+- Pricing and fuel surcharge
+- KPIs and penalties
+- Payment terms
+
+---
 
 ## 🏗️ Architecture
 
 ### Multi-Agent System
 
-The system uses a supervisor pattern with three specialized agents:
-
-1. **Retriever Agent**: Searches and retrieves relevant contract sections
-2. **Analyst Agent**: Analyzes retrieved information and provides insights
-3. **Summarizer Agent**: Creates concise summaries of contracts
-
-### LangGraph Workflow
-
 ```
-START → Supervisor → [Retriever/Analyst/Summarizer] → END
+User Query
+    ↓
+Supervisor Agent (routes query)
+    ↓
+┌───────────────┬──────────────┬────────────────┐
+│               │              │                │
+Retriever       Analyst        Summarizer       END
+(search)        (analyze)      (summarize)
 ```
 
-The supervisor routes queries to the appropriate agent based on the query type.
+**Agents:**
+1. **Supervisor**: Routes queries to appropriate agent
+2. **Retriever**: Searches contracts for relevant information
+3. **Analyst**: Analyzes retrieved data and answers questions
+4. **Summarizer**: Creates contract summaries
 
-### Components
+### Tech Stack
 
-- **Embeddings**: HuggingFace `sentence-transformers/all-MiniLM-L6-v2`
-- **Vector Store**: ChromaDB with persistent storage
-- **LLM**: Groq API (llama3-groq-70b-8192-tool-use-preview)
-- **Chunking**: RecursiveCharacterTextSplitter (1000 chars, 200 overlap)
+| Component | Technology | Purpose |
+|-----------|------------|---------|
+| **LLM** | Groq API | Fast inference with open-source models |
+| **Framework** | LangChain + LangGraph | AI orchestration and workflow |
+| **UI** | Streamlit | Interactive web interface |
+| **Embeddings** | HuggingFace sentence-transformers | Text vectorization |
+| **Vector DB** | ChromaDB | Semantic search and storage |
+| **Documents** | PyPDF + OpenPyXL | PDF and Excel processing |
+
+### Components Details
+
+- **LLM Provider**: Groq API (openai/gpt-oss-120b)
+- **Embeddings**: `sentence-transformers/all-MiniLM-L6-v2`
+- **Vector Store**: ChromaDB with local persistence
+- **Chunking**: RecursiveCharacterTextSplitter (1200 chars, 250 overlap)
+- **Retrieval**: Top-4 similarity search
+
+---
 
 ## ⚙️ Configuration
 
-### Model Selection
+### Available Groq Models
 
-Edit `.env` to change models:
+Edit `.env` or Streamlit secrets to change models:
 
 ```env
-# Available models
-GROQ_MODEL=llama3-groq-70b-8192-tool-use-preview
-# or
-GROQ_MODEL=llama3-70b-8192
-# or
-GROQ_MODEL=mixtral-8x7b-32768
-# or
-GROQ_MODEL=gemma2-9b-it
+# Default (best quality)
+GROQ_MODEL=openai/gpt-oss-120b
+
+# Alternatives:
+# GROQ_MODEL=openai/gpt-oss-28b         # Faster
+# GROQ_MODEL=llama-3.1-8b-instant       # Fastest
+# GROQ_MODEL=llama-3.3-70b-versatile    # Balanced
 ```
 
-### Chunk Settings
-
-Adjust in `.env`:
+### Document Processing Settings
 
 ```env
-CHUNK_SIZE=1000
-CHUNK_OVERLAP=200
+CHUNK_SIZE=1200              # Characters per chunk
+CHUNK_OVERLAP=250            # Overlap between chunks
+TOP_K_RESULTS=4              # Number of chunks to retrieve
 ```
 
 ### System Prompts
 
 Customize agent behavior in `config.py`:
+- `RETRIEVER_PROMPT` - Search behavior
+- `ANALYST_PROMPT` - Analysis style
+- `SUMMARIZER_PROMPT` - Summary format
+- `SUPERVISOR_PROMPT` - Routing logic
 
-- `RETRIEVER_PROMPT`: Controls retrieval agent behavior
-- `ANALYST_PROMPT`: Controls analysis agent behavior
-- `SUMMARIZER_PROMPT`: Controls summarization agent behavior
-- `SUPERVISOR_PROMPT`: Controls routing logic
+All prompts are optimized for **logistics and transportation contracts**.
 
-## 🧪 Testing
+---
 
-Run the test suite:
+## 🧮 Specialized Features
 
-```bash
-pytest test_rag.py -v
-```
+### 1. Trip Cost Calculator
 
-Run specific test classes:
+Built-in tool to calculate FTL transportation costs:
 
-```bash
-pytest test_rag.py::TestConfiguration -v
-pytest test_rag.py::TestContractRAGSystem -v
-pytest test_rag.py::TestTools -v
-```
+**Example Query:**
+> "Calculate trip cost for 500km at €1.2/km with 25% fuel surcharge and 3 hours waiting time"
+
+**Calculates:**
+- Base rate (€/km or €/shipment)
+- Fuel surcharge (%)
+- Waiting time charges
+- Multi-stop fees
+- **Total cost breakdown**
+
+### 2. KPI Compliance Checker
+
+Validates KPI performance against contract requirements:
+
+**Supported KPIs:**
+- On-Time Delivery (OTD) %
+- Claims rate %
+- Booking acceptance %
+- POD upload compliance %
+
+**Example Query:**
+> "Check if 96.5% OTD meets requirements"
+
+**Returns:**
+- Status (✅ Excellent / ⚠️ Warning / ❌ Non-compliant)
+- Gap analysis vs targets
+- Penalty warnings if applicable
+
+---
 
 ## 📊 Performance
 
 ### Typical Metrics
 
-- **Document Processing**: ~2-5 seconds for 10 PDF pages
-- **Query Response**: ~2-4 seconds with streaming
-- **Embedding Generation**: ~1-2 seconds for 1000 tokens
-- **Memory Usage**: ~500MB-1GB depending on document count
+- **Document Processing**: 2-5 seconds per 10 PDF pages
+- **Query Response**: 2-4 seconds (with streaming)
+- **Embedding Generation**: 1-2 seconds per 1000 tokens
+- **Memory Usage**: 500MB-1GB (depends on document count)
 
 ### Optimization Tips
 
-1. **GPU Acceleration**: Set `EMBEDDING_DEVICE=cuda` in `.env` if GPU available
-2. **Chunk Size**: Reduce `CHUNK_SIZE` for faster processing, increase for better context
-3. **Top K Results**: Adjust `TOP_K_RESULTS` to balance relevance vs. speed
-4. **Model Selection**: Use `mixtral-8x7b-32768` for faster responses, `llama3-70b-8192` for better quality
+1. **GPU Acceleration**: Set `EMBEDDING_DEVICE=cuda` (10x faster)
+2. **Reduce Chunk Size**: Set `CHUNK_SIZE=800` for faster processing
+3. **Faster Model**: Use `llama-3.1-8b-instant` for speed
+4. **Fewer Results**: Set `TOP_K_RESULTS=3` for faster retrieval
 
-## 🔍 Key Improvements Over Original
-
-### 1. Fixed Deprecation Warnings
-- ✅ Replaced `create_react_agent` with `ToolNode` and proper StateGraph
-- ✅ Updated to latest LangGraph API with START/END nodes
-- ✅ Fixed ChromaDB persistence with correct parameters
-
-### 2. Proper Embeddings
-- ✅ Replaced hash-based embeddings with HuggingFace semantic embeddings
-- ✅ Added normalization for better similarity search
-
-### 3. Better Model Configuration
-- ✅ Fixed invalid Groq model name
-- ✅ Added support for all available Groq models
-- ✅ Made configuration environment-based
-
-### 4. Streaming Support
-- ✅ Enabled streaming in ChatGroq
-- ✅ Added streaming UI updates in Streamlit
-- ✅ Proper error handling for streaming failures
-
-### 5. Enhanced Architecture
-- ✅ Proper TypedDict for state management
-- ✅ Conditional routing with supervisor pattern
-- ✅ Tool-based agent architecture
-- ✅ Memory checkpointing with MemorySaver
-
-### 6. Improved Error Handling
-- ✅ Comprehensive logging throughout
-- ✅ Try-catch blocks with specific error messages
-- ✅ Graceful fallbacks for failures
-
-### 7. Testing
-- ✅ Comprehensive test suite with pytest
-- ✅ Unit tests for all major components
-- ✅ Integration tests for end-to-end workflow
-- ✅ Mock-based testing for external dependencies
+---
 
 ## 🐛 Troubleshooting
 
-### Issue: "GROQ_API_KEY not found"
-**Solution**: Make sure `.env` file exists and contains your API key
+### "GROQ_API_KEY not found"
 
-### Issue: "Module not found"
-**Solution**: Activate virtual environment and reinstall dependencies
+**Solution:**
+1. Create `.env` file (copy from `.env.example`)
+2. Add: `GROQ_API_KEY=gsk_your_key_here`
+3. Restart the app
+
+### "Module not found" errors
+
+**Solution:**
 ```bash
 pip install -r requirements.txt --upgrade
 ```
 
-### Issue: Slow embeddings
-**Solution**:
-1. Reduce `CHUNK_SIZE` in `.env`
-2. Use GPU if available: `EMBEDDING_DEVICE=cuda`
-3. Consider using a smaller embedding model
+### Slow performance
 
-### Issue: Out of memory
-**Solution**:
-1. Reduce number of documents processed at once
-2. Reduce `CHUNK_SIZE`
-3. Reduce `TOP_K_RESULTS`
+**Solution:**
+1. Reduce `CHUNK_SIZE` to 800
+2. Use GPU: `EMBEDDING_DEVICE=cuda`
+3. Switch to faster model: `llama-3.1-8b-instant`
 
-### Issue: ChromaDB errors
-**Solution**: Delete `./chroma_db` directory and reprocess documents
+### ChromaDB errors
+
+**Solution:**
 ```bash
+# Delete vector database and reprocess
 rm -rf ./chroma_db
+# Then re-upload contracts in the app
 ```
+
+### Out of memory
+
+**Solution:**
+1. Upload fewer documents at once
+2. Reduce `CHUNK_SIZE` to 800
+3. Reduce `TOP_K_RESULTS` to 3
+
+---
 
 ## 📝 Example Queries
 
-### Contract Analysis
-- "What are the key obligations of each party?"
-- "Identify all payment terms and conditions"
-- "When does this contract expire?"
-- "What are the termination clauses?"
+### Logistics Contracts
 
-### Risk Assessment
-- "What are the potential risks in this contract?"
-- "Are there any unusual or concerning clauses?"
-- "What liabilities does each party have?"
+- "What is the fuel surcharge percentage?"
+- "What are the KPI requirements?"
+- "Summarize penalty clauses"
+- "What equipment types are required?"
+- "When is the deadline for the tender?"
+- "What is the pre-advise requirement?"
 
-### Summarization
-- "Provide a summary of all uploaded contracts"
-- "What are the main points of this agreement?"
+### Cost Calculations
 
-## 🔒 Security Notes
+- "Calculate trip cost for 300km at €1.5/km with fuel surcharge"
+- "What is the total cost including 2 hours waiting time?"
 
-- Never commit `.env` file to version control
-- Keep your Groq API key secure
-- Use environment variables for all sensitive configuration
-- Regularly rotate API keys
+### KPI Compliance
+
+- "Check if 97% OTD meets requirements"
+- "What happens if claims exceed 0.3%?"
+
+---
+
+## 🔒 Security
+
+### Data Privacy
+
+- **Local Development**: All data stays on your PC
+- **Streamlit Cloud**: Data stored on Streamlit's servers
+- **Groq API**: Only query text sent (not full documents)
+- **No Training**: Groq uses inference only - your data is NOT used for AI training
+
+### Best Practices
+
+- ✅ Never commit `.env` file to GitHub
+- ✅ Keep Groq API key secure
+- ✅ Use Streamlit secrets for cloud deployment
+- ✅ Rotate API keys regularly
+- ✅ Review `.gitignore` before pushing code
+
+---
 
 ## 📚 Documentation
 
-- [LangChain Documentation](https://python.langchain.com/)
-- [LangGraph Documentation](https://langchain-ai.github.io/langgraph/)
-- [Groq API Documentation](https://console.groq.com/docs)
-- [Streamlit Documentation](https://docs.streamlit.io/)
+### Deployment Guides
+
+- **[STREAMLIT_DEPLOY.md](STREAMLIT_DEPLOY.md)** - Deploy to Streamlit Cloud (15 min)
+- **[DEPLOYMENT_OPTIONS.md](DEPLOYMENT_OPTIONS.md)** - Compare deployment options
+- **[AUTHENTICATION_GUIDE.md](AUTHENTICATION_GUIDE.md)** - Add user authentication
+
+### Technical Documentation
+
+- **[TECH_STACK.md](TECH_STACK.md)** - Complete technical stack
+- **[DEPLOYMENT_AND_SECURITY.md](DEPLOYMENT_AND_SECURITY.md)** - Security comparison
+- **[CUSTOMIZATION_SUMMARY.md](CUSTOMIZATION_SUMMARY.md)** - Logistics customizations
+
+### Presentation
+
+- **[PRESENTATION.html](PRESENTATION.html)** - Visual presentation for stakeholders
+
+---
+
+## 💰 Cost Comparison
+
+| Solution | Cost/Year | Features |
+|----------|-----------|----------|
+| **This System (Streamlit Cloud)** | **$0-240** | Multi-user, remote access, NO training on data |
+| **This System (Self-Hosted)** | **$144-360** | Full control, your cloud, NO training on data |
+| **Microsoft 365 Copilot** | **$6,000-10,000** | Enterprise features, BUT trains on your data |
+
+**Savings: 94-100% cheaper than Microsoft 365 Copilot**
+
+**Key Advantage:** Groq uses inference only - your contract data is NEVER used for AI training (unlike Microsoft/OpenAI)
+
+---
+
+## 🔗 External Resources
+
+- [LangChain Docs](https://python.langchain.com/)
+- [LangGraph Docs](https://langchain-ai.github.io/langgraph/)
+- [Groq API Docs](https://console.groq.com/docs)
+- [Streamlit Docs](https://docs.streamlit.io/)
+- [HuggingFace Models](https://huggingface.co/models)
+
+---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please:
+Contributions welcome! Please:
 
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Add tests for new features
+4. Test thoroughly
 5. Submit a pull request
+
+---
 
 ## 📄 License
 
 This project is provided as-is for educational and commercial use.
 
+---
+
 ## 🙏 Acknowledgments
 
-- LangChain team for the framework
-- Groq for the API
-- HuggingFace for embeddings models
-- Streamlit for the UI framework
+- **LangChain** team for the framework
+- **Groq** for fast inference API
+- **HuggingFace** for embedding models
+- **Streamlit** for the UI framework
 
 ---
 
-**Note**: This system is designed for contract analysis. Always have legal professionals review important contracts. This tool is for assistance only, not legal advice.
+## ⚠️ Disclaimer
+
+This system is designed for contract analysis assistance only. Always have legal professionals review important contracts. This tool does not provide legal advice.
+
+---
+
+**🚀 Ready to deploy?** See [STREAMLIT_DEPLOY.md](STREAMLIT_DEPLOY.md) to get started in 15 minutes!

@@ -34,8 +34,14 @@ chroma_db/
 *.db
 *.sqlite
 
-# Streamlit
-.streamlit/
+# Streamlit secrets (CRITICAL - contains API keys and passwords)
+.streamlit/secrets.toml
+.streamlit/credentials.toml
+
+# Authentication (contains user passwords)
+config_auth.yaml
+*_auth.yaml
+*.yaml.backup
 
 # IDE
 .vscode/
