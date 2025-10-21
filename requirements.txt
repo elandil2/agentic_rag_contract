@@ -5,9 +5,8 @@ python-dotenv==1.0.1
 # LangChain and LangGraph
 langchain==0.3.20
 langchain-community==0.3.20
-langchain-core==0.3.28
 langchain-groq==0.2.5
-langchain-huggingface==0.1.3
+langchain-huggingface==0.3.1
 langgraph==0.2.66
 
 # Vector Store and Embeddings
@@ -22,14 +21,6 @@ pandas==2.2.3
 # HuggingFace and Transformers
 huggingface-hub==0.35.3
 transformers==4.48.0
-torch==2.6.0
-
-# TensorFlow (for embeddings compatibility)
-tensorflow==2.20.0
-tf-keras==2.20.1
-
-# Protobuf (compatible version)
-protobuf==5.29.5
 
 # Additional dependencies
 numpy==1.26.4
