@@ -11,7 +11,7 @@ import json
 import logging
 import re
 import pandas as pd
-from langchain.docstore.document import Document
+from langchain_core.documents import Document
 
 # LangChain imports
 from langchain_groq import ChatGroq
