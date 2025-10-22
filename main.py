@@ -934,10 +934,8 @@ def main():
                                     "next": ""
                                 }, config=config)
                                 ai_response = response["messages"][-1].content if response.get("messages") else "No response"
-                                st.success(f"✓ Q{idx} Answered!")
-                                st.write(ai_response)
 
-                                # Add to chat history
+                                # Add to chat history (answers will appear in the main chat interface on the left)
                                 st.session_state.chat_history.append({
                                     "role": "user",
                                     "content": question
@@ -946,6 +944,9 @@ def main():
                                     "role": "assistant",
                                     "content": ai_response
                                 })
+
+                                # Trigger rerun to display the answer in chat interface
+                                st.rerun()
                             except Exception as e:
                                 logger.error(f"Error in Q{idx}: {str(e)}")
                                 st.error(f"Error: {str(e)}")
