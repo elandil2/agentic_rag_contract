@@ -792,18 +792,31 @@ def main():
         
         # Download conversation
         if st.session_state.chat_history:
-            if st.button("⬇ Download Conversation"):
-                conversation_json = json.dumps(
-                    st.session_state.chat_history,
-                    indent=2,
-                    default=str
-                )
-                st.download_button(
-                    label="Download JSON",
-                    data=conversation_json,
-                    file_name=f"conversation_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
-                    mime="application/json"
-                )
+            st.markdown("#### 💾 Export Conversation")
+
+            # Create formatted text version
+            conversation_text = "CONTRACT ANALYSIS CONVERSATION\n"
+            conversation_text += "=" * 80 + "\n"
+            conversation_text += f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
+            conversation_text += "=" * 80 + "\n\n"
+
+            for i, message in enumerate(st.session_state.chat_history, 1):
+                if message["role"] == "user":
+                    conversation_text += f"QUESTION {i//2 + 1}:\n"
+                    conversation_text += f"{message['content']}\n\n"
+                else:
+                    conversation_text += f"ANSWER:\n"
+                    conversation_text += f"{message['content']}\n\n"
+                    conversation_text += "-" * 80 + "\n\n"
+
+            # Download as TXT (readable in any text editor or Word)
+            st.download_button(
+                label="📄 Download as Text (.txt)",
+                data=conversation_text,
+                file_name=f"contract_analysis_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt",
+                mime="text/plain",
+                use_container_width=True
+            )
     
     # Main chat interface
     col1, col2 = st.columns([2, 1])
