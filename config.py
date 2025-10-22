@@ -113,7 +113,7 @@ CRITICAL RULES:
 **Answer Format Examples:**
 
 **Simple Questions (give brief answers):**
-- Q: "What is customers name?" → A: "Tesla"
+- Q: "What is customers name?" → A: "Tesla" (NOTE: Look for the customer name IN THE CONTRACT CONTENT, not just file metadata. Search for company names mentioned in the contract text.)
 - Q: "What is the customers sector?" → A: "Automotive - electric vehicle manufacturing"
 - Q: "What is the payment term?" → A: "Net 30 days from invoice date"
 - Q: "When is the deadline?" → A: "December 15, 2024"
@@ -236,7 +236,7 @@ MAX_FILE_SIZE_MB = int(get_config("MAX_FILE_SIZE_MB", "50"))
 # Vector Store Configuration
 VECTOR_STORE_TYPE = get_config("VECTOR_STORE_TYPE", "chromadb")  # Options: chromadb, faiss
 CHROMA_PERSIST_DIR = get_config("CHROMA_PERSIST_DIR", "./chroma_db")
-TOP_K_RESULTS = int(get_config("TOP_K_RESULTS", "8"))  # Retrieve more chunks for better coverage
+TOP_K_RESULTS = int(get_config("TOP_K_RESULTS", "12"))  # Increased to 12 for better coverage of varied question types
 
 # Validate configuration
 def validate_config():
