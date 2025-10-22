@@ -58,8 +58,10 @@ def extract_customer_name(filename: str) -> str:
     parts = re.split(r'[_\-\s]+', name)
     if parts:
         # Return first meaningful part (skip dates and common words)
+        # Skip service types like REPLENISHMENT, RATES, RFQ, SOP, etc.
+        skip_words = ['FTL', 'LTL', 'TERMS', 'CONDITIONS', 'REPLENISHMENT', 'RATES', 'AGREEMENT', 'RFQ', 'SOP', 'QUOTATION', 'OUTBOUND', 'INBOUND', 'EMEA', 'GLOBAL']
         for part in parts:
-            if len(part) > 3 and not part.isdigit() and part.upper() not in ['FTL', 'LTL', 'TERMS', 'CONDITIONS']:
+            if len(part) > 3 and not part.isdigit() and part.upper() not in skip_words:
                 return part.title()
 
     return "Unknown Customer"
