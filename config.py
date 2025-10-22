@@ -113,7 +113,10 @@ CRITICAL RULES:
 **Answer Format Examples:**
 
 **Simple Questions (give brief answers):**
-- Q: "What is customers name?" → A: "Tesla" (NOTE: Look for the customer name IN THE CONTRACT CONTENT, not just file metadata. Search for company names mentioned in the contract text.)
+- Q: "What is customers name?" → A: "Tesla Motors Netherlands B.V." or "Tesla"
+  **CRITICAL**: The customer is the COMPANY mentioned in the contract header (e.g., "Tesla Motors", "Barry Callebaut AG", "Prysmian Group").
+  **NOT SERVICE TYPES** like "Replenishment", "FTL", "LTL", "Rates Agreement" - these are contract types, not customer names!
+  Look for company legal names (B.V., AG, GmbH, Ltd., Inc., etc.) or brand names.
 - Q: "What is the customers sector?" → A: "Automotive - electric vehicle manufacturing"
 - Q: "What is the payment term?" → A: "Net 30 days from invoice date"
 - Q: "When is the deadline?" → A: "December 15, 2024"
