@@ -670,8 +670,8 @@ def main():
     # Professional Logo
     st.markdown("""
         <div class="logo-container">
-            <h1 class="logo-text">ContractAI</h1>
-            <p class="logo-subtitle">Advanced Contract Analysis System</p>
+            <h1 class="logo-text">Contract Analysis</h1>
+            <p class="logo-subtitle">Intelligent Document Processing System</p>
         </div>
     """, unsafe_allow_html=True)
 
@@ -705,8 +705,8 @@ def main():
                     <circle cx="140" cy="60" r="8" fill="#FFD700"/>
                     <path d="M 140 52 L 142 58 L 148 60 L 142 62 L 140 68 L 138 62 L 132 60 L 138 58 Z" fill="white"/>
                 </svg>
-                <h2 style="color: #667eea; margin-top: 10px; font-weight: 700; letter-spacing: 1px;">ContractAI</h2>
-                <p style="color: #666; font-size: 12px; margin-top: -10px;">Powered by RAG Technology</p>
+                <h2 style="color: #667eea; margin-top: 10px; font-weight: 700; letter-spacing: 1px;">Contract Analysis</h2>
+                <p style="color: #666; font-size: 12px; margin-top: -10px;">AI-Powered Document Intelligence</p>
             </div>
         """, unsafe_allow_html=True)
 
