@@ -39,14 +39,6 @@ class AgentState(TypedDict):
     messages: Sequence[BaseMessage]
     next: str
 
-# Initialize session state
-if 'vector_store' not in st.session_state:
-    st.session_state.vector_store = None
-if 'chat_history' not in st.session_state:
-    st.session_state.chat_history = []
-if 'supervisor' not in st.session_state:
-    st.session_state.supervisor = None
-
 def extract_customer_name(filename: str) -> str:
     """Extract customer name from filename"""
     # Remove file extension
@@ -577,6 +569,14 @@ def main():
         layout="wide",
         initial_sidebar_state="expanded"
     )
+
+    # Initialize session state
+    if 'vector_store' not in st.session_state:
+        st.session_state.vector_store = None
+    if 'chat_history' not in st.session_state:
+        st.session_state.chat_history = []
+    if 'supervisor' not in st.session_state:
+        st.session_state.supervisor = None
 
     # Custom CSS for professional styling
     st.markdown("""
