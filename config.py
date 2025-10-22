@@ -222,14 +222,14 @@ Example opening: "FTL Transportation Agreement with Tesla for 2025 replenishment
 """
 
 # Document Processing Configuration
-CHUNK_SIZE = int(get_config("CHUNK_SIZE", "600"))  # Reduced for better granularity and retrieval accuracy
-CHUNK_OVERLAP = int(get_config("CHUNK_OVERLAP", "150"))  # Overlap for context preservation
+CHUNK_SIZE = int(get_config("CHUNK_SIZE", "1000"))  # Balanced size for contract content
+CHUNK_OVERLAP = int(get_config("CHUNK_OVERLAP", "200"))  # Overlap for context preservation
 MAX_FILE_SIZE_MB = int(get_config("MAX_FILE_SIZE_MB", "50"))
 
 # Vector Store Configuration
 VECTOR_STORE_TYPE = get_config("VECTOR_STORE_TYPE", "chromadb")  # Options: chromadb, faiss
 CHROMA_PERSIST_DIR = get_config("CHROMA_PERSIST_DIR", "./chroma_db")
-TOP_K_RESULTS = int(get_config("TOP_K_RESULTS", "6"))  # Optimal balance for focused contract queries
+TOP_K_RESULTS = int(get_config("TOP_K_RESULTS", "8"))  # Retrieve more chunks for better coverage
 
 # Validate configuration
 def validate_config():

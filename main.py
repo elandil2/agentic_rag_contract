@@ -194,14 +194,10 @@ class ContractRAGSystem:
             )
             logger.info("Vector store created successfully")
 
-            # Create retriever with MMR for better diversity and retrieval
+            # Create retriever with similarity search
             self.retriever = self.vector_store.as_retriever(
-                search_type="mmr",  # Maximum Marginal Relevance for better diversity
-                search_kwargs={
-                    "k": TOP_K_RESULTS,
-                    "fetch_k": TOP_K_RESULTS * 3,  # Fetch more candidates for MMR
-                    "lambda_mult": 0.5  # Balance between relevance (1.0) and diversity (0.0)
-                }
+                search_type="similarity",
+                search_kwargs={"k": TOP_K_RESULTS}
             )
 
             return True
