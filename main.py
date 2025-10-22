@@ -105,9 +105,18 @@ class ContractRAGSystem:
         try:
             all_documents = []
 
+            # First, detect customer from ANY filename in the batch
+            # This ensures all files get the same customer name if they're uploaded together
+            batch_customer_name = "Unknown Customer"
             for uploaded_file in uploaded_files:
-                # Extract customer name from filename
-                customer_name = extract_customer_name(uploaded_file.name)
+                detected_name = extract_customer_name(uploaded_file.name)
+                if detected_name != "Unknown Customer":
+                    batch_customer_name = detected_name
+                    break  # Found a customer name, use it for all files
+
+            for uploaded_file in uploaded_files:
+                # Use the batch customer name for all files
+                customer_name = batch_customer_name
 
                 # Save uploaded file temporarily
                 with tempfile.NamedTemporaryFile(delete=False, suffix=uploaded_file.name) as tmp_file:
