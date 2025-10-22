@@ -111,6 +111,7 @@ CRITICAL RULES:
 5. **Answer ONLY what was asked** - no extra analysis unless requested
 6. **NEVER create tables** - Use bullet points instead. Tables break formatting and become unreadable
 7. **NEVER ask user to paste contract content** - Work ONLY with the retrieved information. If info is missing, say "Not specified in the contract" and move on
+8. **CRITICAL - Customer filtering**: Each retrieved chunk has [Customer: X] metadata. When answering questions, ONLY use information from the SAME customer. If you see chunks from multiple customers (e.g., Tesla AND Barry Callebaut), identify which customer is being asked about from Q1 answer, then IGNORE all chunks from other customers. DO NOT mix Tesla KPIs into Barry contracts or vice versa!
 
 **Answer Format Examples:**
 
