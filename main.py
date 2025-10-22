@@ -185,14 +185,25 @@ class ContractRAGSystem:
             splits = text_splitter.split_documents(all_documents)
             logger.info(f"Created {len(splits)} document chunks from {len(all_documents)} documents")
 
-            # Create vector store with proper persistence
-            self.vector_store = Chroma.from_documents(
-                documents=splits,
-                embedding=self.embeddings,
-                persist_directory=CHROMA_PERSIST_DIR,
-                collection_name="contracts"
-            )
-            logger.info("Vector store created successfully")
+            # Create vector store (in-memory for Streamlit Cloud compatibility)
+            # On Streamlit Cloud, persist_directory doesn't work reliably
+            # Store in session state instead for persistence across interactions
+            try:
+                self.vector_store = Chroma.from_documents(
+                    documents=splits,
+                    embedding=self.embeddings,
+                    collection_name="contracts"
+                    # Removed persist_directory for Streamlit Cloud compatibility
+                )
+                logger.info(f"Vector store created successfully with {len(splits)} chunks")
+            except Exception as e:
+                logger.error(f"Error creating vector store: {e}")
+                # Fallback: try with explicit in-memory
+                self.vector_store = Chroma.from_documents(
+                    documents=splits,
+                    embedding=self.embeddings
+                )
+                logger.info("Vector store created with fallback method")
 
             # Create retriever with similarity search
             self.retriever = self.vector_store.as_retriever(
@@ -219,8 +230,19 @@ class ContractRAGSystem:
                 return "No contracts loaded. Please upload contract documents first."
 
             try:
-                # Retrieve relevant documents
-                relevant_docs = self.retriever.get_relevant_documents(query)
+                # Debug: Check if vector store exists
+                if not self.vector_store:
+                    return "Vector store not initialized. Please process documents first."
+
+                # Retrieve relevant documents using invoke for better compatibility
+                relevant_docs = self.retriever.invoke(query)
+
+                if not relevant_docs or len(relevant_docs) == 0:
+                    # Try direct similarity search as fallback
+                    try:
+                        relevant_docs = self.vector_store.similarity_search(query, k=8)
+                    except:
+                        pass
 
                 if not relevant_docs:
                     return "No relevant information found in the contracts."
@@ -244,6 +266,7 @@ class ContractRAGSystem:
                 return result.strip()
 
             except Exception as e:
+                logger.error(f"Retrieval error: {str(e)}")
                 return f"Error retrieving information: {str(e)}"
         
         @tool

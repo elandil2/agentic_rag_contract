@@ -10,7 +10,11 @@ from dotenv import load_dotenv
 # Try to import streamlit for secrets management (when deployed to Streamlit Cloud)
 try:
     import streamlit as st
-    USE_STREAMLIT_SECRETS = hasattr(st, 'secrets') and len(st.secrets) > 0
+    # Check if secrets are available without triggering FileNotFoundError
+    try:
+        USE_STREAMLIT_SECRETS = hasattr(st, 'secrets') and len(st.secrets) > 0
+    except (FileNotFoundError, RuntimeError):
+        USE_STREAMLIT_SECRETS = False
 except ImportError:
     USE_STREAMLIT_SECRETS = False
 
